@@ -110,20 +110,20 @@ class AutoScalingLoadBalancer {
 	 * @param {Queue} queue - The queue to check.
 	 * @returns {Promise<boolean>} True if the queue is healthy, false otherwise.
 	 */
-	// async isQueueHealthy(queue) {
-	// 	try {
-	// 		const waitingCount = await queue.getWaitingCount();
-	// 		const isHealthy = waitingCount < 1000; // Mark queue as unhealthy if >1000 jobs
+	async isQueueHealthy(queue) {
+		try {
+			const waitingCount = await queue.getWaitingCount();
+			const isHealthy = waitingCount < 1000; // Mark queue as unhealthy if >1000 jobs
 
-	// 		if (!isHealthy) {
-	// 			console.warn(`Queue ${queue.name} is overloaded.`);
-	// 		}
-	// 		return isHealthy;
-	// 	} catch (error) {
-	// 		console.error(`Error checking queue ${queue.name}: ${error.message}`);
-	// 		return false;
-	// 	}
-	// }
+			if (!isHealthy) {
+				console.warn(`Queue ${queue.name} is overloaded.`);
+			}
+			return isHealthy;
+		} catch (error) {
+			console.error(`Error checking queue ${queue.name}: ${error.message}`);
+			return false;
+		}
+	}
 
 	/**
 	 * Selects the queue with the least number of waiting jobs.
